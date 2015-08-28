@@ -1,1 +1,4 @@
-# Python_RPI_LCD_menu
+Raspberry Pi Lcd Menu
+==================
+base on :  `https://github.com/aufder/RaspberryPiLcdMenu`
+

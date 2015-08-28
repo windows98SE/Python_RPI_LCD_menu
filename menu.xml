@@ -1,0 +1,29 @@
+<application>
+  <folder text="System">
+
+    <folder text="Info">
+      <widget text="Check Ram" function="showRam" />
+      <widget text="Show Date/Time" function="showDateTime" />
+    </folder>
+
+    <folder text="Color">
+      <widget text="Red" function="LcdRed" />
+      <widget text="Green" function="LcdGreen" />
+      <widget text="Blue" function="LcdBlue" />
+      <widget text="Off" function="LcdOff" />
+    </folder>
+
+    <folder text="Command">
+      <widget text="Quit" function="DoQuit" />
+      <widget text="Reboot" function="DoReboot" />
+      <widget text="Shutdown" function="DoShutdown" />
+    </folder>
+
+  </folder>
+
+  <folder text="Help">
+    <widget text="Description" function="showDescription" />
+    <widget text="Version" function="showVersion" />
+  </folder>
+
+</application>
