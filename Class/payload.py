@@ -1,19 +1,17 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
-# 
+#
 import os
 import psutil
 import commands
+from string import split
+from datetime import datetime, timedelta
 from time import sleep, strftime, localtime
 
 import Adafruit_CharLCD as LCD
 
-DEBUG = 1
-
-# payload 
+# payload
 def showDateTime(lcd):
-  if DEBUG:
-    print('in showDateTime')
   lcd.clear()
   while not(lcd.is_pressed(LCD.LEFT)):
     sleep(0.25)
@@ -32,8 +30,6 @@ def showRam(lcd):
   sleep(3)
 
 def showVersion(lcd):
-  if DEBUG:
-    print('in showVersion')
   lcd.clear()
   logo = '[ StepHack.C\x02m ]'
   version = 'V.1.0.0'
@@ -41,19 +37,9 @@ def showVersion(lcd):
   sleep(3)
 
 def showDescription(lcd):
-  if DEBUG:
-    print('in showDescription')
-
-  title = 'License :'
-  License = 'The GNU General Public License is a free, copyleft license for software and other kinds of works.'
-  len_msg = len(License) - (15)
-  for i in range(len_msg):
-    if lcd.is_pressed(LCD.LEFT):
-      break
-    lcd.clear()
-    lcd.message(("%s\n" % title))
-    lcd.message(("%s" % License[i:i+16]))
-    sleep(0.3)
+  title = "License :"
+  msg = "The GNU General Public License is a free, copyleft license for software and other kinds of works."
+  scroll_msg(lcd, title, msg)
 
 def LcdRed(lcd):
   lcd.set_color(1,0,0)
@@ -68,22 +54,14 @@ def LcdOff(lcd):
   lcd.set_color(0,0,0)
 
 def DoShutdown(lcd):
-  lcd.clear()
-  lcd.message('Are you sure?\nPress Sel for Y')
-  while 1:
-    if lcd.is_pressed(LCD.LEFT):
-      break
-    if lcd.is_pressed(LCD.SELECT):
-      lcd.clear()
-      lcd.set_backlight(False)
-      lcd.set_color(0,0,0)
-      commands.getoutput("sudo shutdown -h now")
-      quit()
-    sleep(0.25)
+  DoQuit(lcd, "sudo shutdown -h now"):
 
 def DoReboot(lcd):
+  DoQuit(lcd, "sudo reboot"):
+
+def DoQuit(lcd, cmd=None):
   lcd.clear()
-  lcd.message('Are you sure?\nPress Sel for Y')
+  lcd.message("Are you sure?\nPress Sel for Y")
   while 1:
     if lcd.is_pressed(LCD.LEFT):
       break
@@ -91,19 +69,16 @@ def DoReboot(lcd):
       lcd.clear()
       lcd.set_backlight(False)
       lcd.set_color(0,0,0)
-      commands.getoutput("sudo reboot")
+      if cmd not None: commands.getoutput(cmd)
       quit()
     sleep(0.25)
 
-def DoQuit(lcd):
-  lcd.clear()
-  lcd.message('Are you sure?\nPress Sel for Y')
-  while 1:
+def scroll_msg(lcd, title, msg):
+  len_msg = len(msg) - (15)
+  for i in range(len_msg):
     if lcd.is_pressed(LCD.LEFT):
       break
-    if lcd.is_pressed(LCD.SELECT):
-      lcd.clear()
-      lcd.set_backlight(False)
-      lcd.set_color(0,0,0)
-      quit()
-    sleep(0.25)
+    lcd.clear()
+    lcd.message(("%s\n" % title))
+    lcd.message(("%s" % msg[i:i+16]))
+    sleep(0.3)
