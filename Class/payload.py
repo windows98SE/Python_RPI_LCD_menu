@@ -69,7 +69,7 @@ def DoQuit(lcd, cmd=None):
       lcd.clear()
       lcd.set_backlight(False)
       lcd.set_color(0,0,0)
-      if cmd not None: commands.getoutput(cmd)
+      if cmd is not None: commands.getoutput(cmd)
       quit()
     sleep(0.25)
 
