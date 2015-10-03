@@ -54,10 +54,10 @@ def LcdOff(lcd):
   lcd.set_color(0,0,0)
 
 def DoShutdown(lcd):
-  DoQuit(lcd, "sudo shutdown -h now"):
+  DoQuit(lcd, "sudo shutdown -h now")
 
 def DoReboot(lcd):
-  DoQuit(lcd, "sudo reboot"):
+  DoQuit(lcd, "sudo reboot")
 
 def DoQuit(lcd, cmd=None):
   lcd.clear()
